@@ -60,7 +60,7 @@ bash$ ./pwnedpass.sh example.txt
 bash$ 
 ```
 
-Here, the API for Pwned Passwords was used to test two plaintext passwords with the first plaintext password `12345678` being reported by Pwned Passwords as being reported at the time of this example `2889079` times.
+Here, the API for Pwned Passwords was used to test two plaintext passwords with the first plaintext password `12345678` being reported by Pwned Passwords `2889079` times.
 
 
 # Dependencies
