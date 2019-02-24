@@ -18,9 +18,11 @@ pwnedpass.sh <filename>
 
 where:
 
-  <filename> is a text file with the following format
+  `<filename>` is a text file with the following format
 
+```
   Password: <plaintext password>
+```
 
 # Warning
 
@@ -58,16 +60,16 @@ bash$ ./pwnedpass.sh example.txt
 bash$ 
 ```
 
-Here, the API for Pwned Passwords was used to text two plaintext passwords with the first plaintext password `12345678` being reported by Pwned Passwords as being reported at the time of this example `2889079` times.
+Here, the API for Pwned Passwords was used to test two plaintext passwords with the first plaintext password `12345678` being reported by Pwned Passwords as being reported at the time of this example `2889079` times.
 
 
 # Dependencies
 
-- sed: to parse the plaintext password input file
-- sort: to generate a plaintext password temporary file
-- openssl: to generate a SHA1 hash of the plaintext password
-- curl: to invoke the API for Pwned Passwords
-- head: to report Pwned Passwords hits against the plaintext password
+- `sed`: to parse the plaintext password input file
+- `sort`: to generate a plaintext password temporary file
+- `openssl`: to generate a SHA1 hash of the plaintext password
+- `curl`: to invoke the API for Pwned Passwords
+- `head`: to report Pwned Passwords hits against the plaintext password
 
 
 # Task Lists
