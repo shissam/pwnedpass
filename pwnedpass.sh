@@ -14,9 +14,11 @@ lc=0
 for p in $(cat pwdlist.txt)
 do
   lc=$(( ${lc} + 1 ))
-  ps=$(echo -n ${p} | openssl dgst -sha1)
-  hp1=$(echo ${ps} | cut -c 10-14)
-  hp2=$(echo ${ps} | cut -c 15-)
+  # use coreutils format for dgst to normalize output for
+  # LibreSSL and OpenSSL to be [:xdigit:][:space:]*<input file name>
+  ps=$(echo -n ${p} | openssl dgst -sha1 -r | cut -d\  -f1)
+  hp1=$(echo ${ps} | cut -c 1-5)
+  hp2=$(echo ${ps} | cut -c 6-)
   echo ${hp1}:${hp2} >> sha1list.txt
   m=$(curl https://api.pwnedpasswords.com/range/${hp1} -o - 2>/dev/null |\
     grep -i ${hp2})
