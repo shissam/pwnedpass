@@ -81,3 +81,4 @@ Here, the API for Pwned Passwords was used to test two plaintext passwords with 
 - [ ] add option to perform file clean up after report
 - [ ] add secure erase option for files used and created by `pwnedpass.sh`
 
+circa 202208
