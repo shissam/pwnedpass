@@ -13,11 +13,13 @@ The API for Pwned Passwords used for this script is documented at
 # Usage
 
 ```
-pwnedpass.sh <filename>
+pwnedpass.sh [-Q] [-n] <filename>
 ```
 
 where:
-
+  -Q perform quality checks (i.e., strength) on passwords
+     based on results from `hivesystems.com/password`
+  -n skips pwned check via the pwnedpasswords.com API
   `<filename>` is a text file with the following format
 
 ```
@@ -55,12 +57,13 @@ During the processing of the input file of plaintext passwords, the following fi
 bash$ cat example.txt 
 Password: 12345678
 Password: yQwqu1C0cZFDAq
-bash$ ./pwnedpass.sh example.txt 
-12345678 FB2927D828AF22F592134E8932480637C0D:2889079
+bash$ ./pwnedpass.sh -Q example.txt 
+12345678 PWNED:: FB2927D828AF22F592134E8932480637C0D:6921444
+12345678: 8 < (18) && is only numeric. A:(too_short no_alpha no_mix no_symbols)
 bash$ 
 ```
 
-Here, the API for Pwned Passwords was used to test two plaintext passwords with the first plaintext password `12345678` being reported by Pwned Passwords `2889079` times.
+Here, the API for Pwned Passwords was used to test two plaintext passwords with the first plaintext password `12345678` being reported as being seen by Pwned Passwords `6,921,444` times.
 
 
 # Dependencies
@@ -81,4 +84,4 @@ Here, the API for Pwned Passwords was used to test two plaintext passwords with 
 - [ ] add option to perform file clean up after report
 - [ ] add secure erase option for files used and created by `pwnedpass.sh`
 
-circa 202208
+circa 202407
