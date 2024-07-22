@@ -14,16 +14,19 @@ The API for Pwned Passwords used for this script is documented at
 
 ```
 pwnedpass.sh [-Q] [-n] <filename>
-```
 
 where:
   -Q perform quality checks (i.e., strength) on passwords
-     based on results from `hivesystems.com/password`
+     based on results from (https://hivesystems.com/password)
+
   -n skips pwned check via the pwnedpasswords.com API
+
   `<filename>` is a text file with the following format
 
-```
-  Password: <plaintext password>
+     Password: <plaintext password1>
+     Password: <plaintext password2>
+     ...
+     Password: <plaintext passwordN>
 ```
 
 # Warning
