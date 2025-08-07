@@ -1,7 +1,10 @@
 #!/bin/bash
 
+_DEF_SLEEPY_=0.25
+_SLEEPY_="${_SLEEPY_:-${_DEF_SLEEPY_}}"
+
 #
-# returns mix of: too_short no_alpha no_digits no_mix no_symbols
+# returns mix of: too_short no_alpha no_digits no_mixcase no_symbols
 pwdStrength()
 {
   local _msg
@@ -14,7 +17,7 @@ pwdStrength()
   ! [[ "${#_str}" -ge 1200 ]] && _msg="${_msg}too_short "
   ! [[ "${_str}" =~ [[:alpha:]] ]] && _msg="${_msg}no_alpha "
   ! [[ "${_str}" =~ [[:digit:]] ]] && _msg="${_msg}no_digits "
-  ! { [[ "${_str}" =~ [A-Z] ]] && [[ "${_str}" =~ [a-z] ]]; } && _msg="${_msg}no_mix "
+  ! { [[ "${_str}" =~ [A-Z] ]] && [[ "${_str}" =~ [a-z] ]]; } && _msg="${_msg}no_mixcase "
   ! [[ "${_str}" == *['!'@#\$%^\&*\(\)_+]* ]] && _msg="${_msg}no_symbols"
 
   echo -n "${_msg}" | sed 's/[[:space:]]*$//;s/\n//;' | tr -d '\n'
@@ -76,16 +79,16 @@ do
   ${_pwnedCheck} && m=$(curl "https://api.pwnedpasswords.com/range/${hp1}" -o - 2>/dev/null |\
     grep -i "${hp2}") && echo "$(head -${lc} pwdlist.txt | tail -1) PWNED:: ${m}"
 
-  ${_qualityCheck} && { 
+  ${_qualityCheck} && {
     _strmsg="$(pwdStrength "${p}")"
-    case "${_strmsg}" in # too_short no_alpha no_digits no_mix no_symbols {
-      "too_short no_alpha no_mix no_symbols") 
+    case "${_strmsg}" in # too_short no_alpha no_digits no_mixcase no_symbols {
+      "too_short no_alpha no_mixcase no_symbols") 
         [[ ${#p} -lt 18 ]] && echo "${p}: ${#p} < (18) && is only numeric. A:(${_strmsg})"
         ;;
-      "too_short no_alpha no_mix") 
+      "too_short no_alpha no_mixcase") 
         [[ ${#p} -lt 18 ]] && echo "${p}: ${#p} < (18) && is only numeric symbols. J:(${_strmsg})"
         ;;
-      "too_short no_digits no_mix no_symbols")
+      "too_short no_digits no_mixcase no_symbols")
         [[ ${#p} -lt 17 ]] && echo "${p}: ${#p} < (17) && is only alpha (non-mixed). B:(${_strmsg})"
         ;;
       "too_short no_digits no_symbols")
@@ -97,13 +100,13 @@ do
       "too_short no_digits")
         [[ ${#p} -lt 14 ]] && echo "${p}: ${#p} < (14) && is only alpha symbols (mixed case). E:(${_strmsg})"
         ;;
-      "too_short no_mix")
+      "too_short no_mixcase")
         [[ ${#p} -lt 14 ]] && echo "${p}: ${#p} < (14) && is only alpha-numeric symbols (non-mixed). F:(${_strmsg})"
         ;;
-      "too_short no_mix no_symbols")
+      "too_short no_mixcase no_symbols")
         [[ ${#p} -lt 14 ]] && echo "${p}: ${#p} < (14) && is only alpha-numeric (non-mixed). G:(${_strmsg})"
         ;;
-      "too_short no_digits no_mix")
+      "too_short no_digits no_mixcase")
         [[ ${#p} -lt 14 ]] && echo "${p}: ${#p} < (14) && is only alpha symbols (non-mixed). H:(${_strmsg})"
         ;;
       "too_short")
@@ -115,7 +118,7 @@ do
     esac  #}
   }
 
-  ${_pwnedCheck} && sleep 0.25
+  ${_pwnedCheck} && sleep "${_SLEEPY_}"
 done <<<"$(cat pwdlist.txt)"
 
 #
